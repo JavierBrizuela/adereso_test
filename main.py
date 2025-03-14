@@ -2,6 +2,7 @@ import requests
 import re
 import time
 from datetime import datetime, timedelta
+from difflib import get_close_matches
 
 class ChallengeSolver:
     def __init__(self, token):
@@ -12,21 +13,43 @@ class ChallengeSolver:
         }
         self.cache = {}
         self.start_time = None
-        self.time_limit = 180  # 3 minutos en segundos
+        self.time_limit = 180  # 3 minutos en segundos            
+            
+    def extract_expression(text):
+        # Buscar el patrón ```math [expresión] ```
+        match = re.search(r'```math\n(.*?)\n```', text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        return None
     
     def get_expression_from_ai(self, problem_text):
         chat_url = "https://recruiting.adere.so/chat_completion"
         messages = [
-            {
-                "role": "system",
-                "content": (
-                    "Traduce el problema a una expresión matemática usando atributos de Star Wars (Personaje/Planeta) y Pokémon. "
-                    "Formato: [Tipo:Nombre.Atributo]. Tipos: StarWarsCharacter, StarWarsPlanet, Pokemon. "
-                    "Ejemplo: 'Luke Skywalker masa' → StarWarsCharacter:luke_skywalker.mass"
-                )
-            },
-            {"role": "user", "content": problem_text}
-        ]
+                    {
+                        "role": "system",
+                        "content": 
+                        """
+                        Traduce el problema a una expresión matemática usando SOLO estos atributos válidos:
+                        
+                        - 🌍 StarWarsPlanet: surface_water, rotation_period, population, diameter, orbital_period
+                        - 🧑🚀 StarWarsCharacter: height, mass, homeworld
+                        - 🐹 Pokemon: base_experience, height, weight
+
+                        Genera la expresión matemática usando el formato: 
+                        `[TipoEntidad:nombre_entidad.atributo]`
+
+                        **ENVUELVE LA EXPRESIÓN FINAL** entre triple backtick + math:
+                        ```math
+                        (StarWarsPlanet:tatooine.population * Pokemon:pikachu.height)
+                        ```
+                        
+                        ❗ Usa EXACTAMENTE los nombres en inglés y formato snake_case.
+                        Ejemplo: "agua superficial de Kamino" → StarWarsPlanet:kamino.surface_water
+                        """
+                    },
+                    {"role": "user", "content": problem_text}
+                ]
+        
         payload = {"model": "gpt-4o-mini", "messages": messages}
         response = requests.post(chat_url, headers=self.headers, json=payload)
         return response.json()['choices'][0]['message']['content']
@@ -65,7 +88,7 @@ class ChallengeSolver:
         result = data.get('results', [{}])[0] if entity_type != 'Pokemon' else data
         self.cache[cache_key] = result
         return result
-    
+
     def resolve_attribute(self, data, attribute_path):
         current = data
         for attr in attribute_path.split('.'):
@@ -99,9 +122,9 @@ class ChallengeSolver:
     def solve_problem(self, problem_text):
         try:
             expression = self.get_expression_from_ai(problem_text)
+            print(f"Expression: {expression}")
             terms = re.findall(r'\b\w+:\w+(?:\.\w+)*\b', expression)
             term_values = {}
-            print(f"Expression: {expression}")
             for term in terms:
                 term_info = self.parse_term(term)
                 if not term_info:
@@ -113,10 +136,11 @@ class ChallengeSolver:
             
             for term, value in term_values.items():
                 expression = expression.replace(term, str(value))
+            expression = self.extract_expression(expression)
             print(f"Expression: {expression}")
             return eval(expression)
         except:
-            return 0
+            return 'nose'
         
     def run_test(self, url):
         problem_id, problem_text, problem_expression, problem_solution = self.start_test(url)
