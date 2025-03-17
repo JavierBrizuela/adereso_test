@@ -1,0 +1,506 @@
+{
+  "Pokemon": {
+    "delibird": {
+      "base_experience": 116,
+      "height": 9,
+      "weight": 160
+    },
+    "espurr": {
+      "base_experience": 71,
+      "height": 3,
+      "weight": 35
+    },
+    "blitzle": {
+      "base_experience": 59,
+      "height": 8,
+      "weight": 298
+    },
+    "stakataka": {
+      "base_experience": 285,
+      "height": 55,
+      "weight": 8200
+    },
+    "pansage": {
+      "base_experience": 63,
+      "height": 6,
+      "weight": 105
+    },
+    "klang": {
+      "base_experience": 154,
+      "height": 6,
+      "weight": 510
+    },
+    "raikou": {
+      "base_experience": 290,
+      "height": 19,
+      "weight": 1780
+    },
+    "dugtrio": {
+      "base_experience": 149,
+      "height": 7,
+      "weight": 333
+    },
+    "mantine": {
+      "base_experience": 170,
+      "height": 21,
+      "weight": 2200
+    },
+    "cresselia": {
+      "base_experience": 300,
+      "height": 15,
+      "weight": 856
+    },
+    "walrein": {
+      "base_experience": 265,
+      "height": 14,
+      "weight": 1506
+    },
+    "torkoal": {
+      "base_experience": 165,
+      "height": 5,
+      "weight": 804
+    },
+    "taillow": {
+      "base_experience": 54,
+      "height": 3,
+      "weight": 23
+    },
+    "vaporeon": {
+      "base_experience": 184,
+      "height": 10,
+      "weight": 290
+    },
+    "herdier": {
+      "base_experience": 130,
+      "height": 9,
+      "weight": 147
+    },
+    "naganadel": {
+      "base_experience": 270,
+      "height": 36,
+      "weight": 1500
+    },
+    "shelmet": {
+      "base_experience": 61,
+      "height": 4,
+      "weight": 77
+    },
+    "haxorus": {
+      "base_experience": 270,
+      "height": 18,
+      "weight": 1055
+    },
+    "frillish": {
+      "base_experience": 67,
+      "height": 12,
+      "weight": 330
+    },
+    "watchog": {
+      "base_experience": 147,
+      "height": 11,
+      "weight": 270
+    },
+    "dewgong": {
+      "base_experience": 166,
+      "height": 17,
+      "weight": 1200
+    },
+    "ralts": {
+      "base_experience": 40,
+      "height": 4,
+      "weight": 66
+    },
+    "absol": {
+      "base_experience": 163,
+      "height": 12,
+      "weight": 470
+    },
+    "togekiss": {
+      "base_experience": 273,
+      "height": 15,
+      "weight": 380
+    },
+    "lombre": {
+      "base_experience": 119,
+      "height": 12,
+      "weight": 325
+    },
+    "munchlax": {
+      "base_experience": 78,
+      "height": 6,
+      "weight": 1050
+    },
+    "snubbull": {
+      "base_experience": 60,
+      "height": 6,
+      "weight": 78
+    },
+    "salamence": {
+      "base_experience": 300,
+      "height": 15,
+      "weight": 1026
+    },
+    "gigalith": {
+      "base_experience": 258,
+      "height": 17,
+      "weight": 2600
+    },
+    "weezing": {
+      "base_experience": 172,
+      "height": 12,
+      "weight": 95
+    },
+    "scizor": {
+      "base_experience": 175,
+      "height": 18,
+      "weight": 1180
+    },
+    "sealeo": {
+      "base_experience": 144,
+      "height": 11,
+      "weight": 876
+    },
+    "sharpedo": {
+      "base_experience": 161,
+      "height": 18,
+      "weight": 888
+    },
+    "mawile": {
+      "base_experience": 133,
+      "height": 6,
+      "weight": 115
+    },
+    "panpour": {
+      "base_experience": 63,
+      "height": 6,
+      "weight": 135
+    },
+    "bewear": {
+      "base_experience": 175,
+      "height": 21,
+      "weight": 1350
+    },
+    "nincada": {
+      "base_experience": 53,
+      "height": 5,
+      "weight": 55
+    },
+    "darkrai": {
+      "base_experience": 270,
+      "height": 15,
+      "weight": 505
+    },
+    "solrock": {
+      "base_experience": 161,
+      "height": 12,
+      "weight": 1540
+    },
+    "venusaur": {
+      "base_experience": 263,
+      "height": 20,
+      "weight": 1000
+    },
+    "croconaw": {
+      "base_experience": 142,
+      "height": 11,
+      "weight": 250
+    },
+    "yungoos": {
+      "base_experience": 51,
+      "height": 4,
+      "weight": 60
+    },
+    "loudred": {
+      "base_experience": 126,
+      "height": 10,
+      "weight": 405
+    },
+    "litleo": {
+      "base_experience": 74,
+      "height": 6,
+      "weight": 135
+    },
+    "bounsweet": {
+      "base_experience": 42,
+      "height": 3,
+      "weight": 32
+    },
+    "helioptile": {
+      "base_experience": 58,
+      "height": 5,
+      "weight": 60
+    },
+    "chespin": {
+      "base_experience": 63,
+      "height": 4,
+      "weight": 90
+    },
+    "weepinbell": {
+      "base_experience": 137,
+      "height": 10,
+      "weight": 64
+    },
+    "toucannon": {
+      "base_experience": 218,
+      "height": 11,
+      "weight": 260
+    },
+    "cottonee": {
+      "base_experience": 56,
+      "height": 3,
+      "weight": 6
+    },
+    "fearow": {
+      "base_experience": 155,
+      "height": 12,
+      "weight": 380
+    },
+    "sliggoo": {
+      "base_experience": 158,
+      "height": 8,
+      "weight": 175
+    },
+    "crawdaunt": {
+      "base_experience": 164,
+      "height": 11,
+      "weight": 328
+    }
+  },
+  "StarWarsCharacter": {
+    "ayla_secura": {
+      "height": "178",
+      "mass": "55",
+      "homeworld": "https://swapi.dev/api/planets/37/"
+    },
+    "lando": {
+      "height": "177",
+      "mass": "79",
+      "homeworld": "https://swapi.dev/api/planets/30/"
+    },
+    "jabba": {
+      "height": "175",
+      "mass": "1,358",
+      "homeworld": "https://swapi.dev/api/planets/24/"
+    },
+    "qui-gon_jinn": {
+      "height": "193",
+      "mass": "89",
+      "homeworld": "https://swapi.dev/api/planets/28/"
+    },
+    "shaak_ti": {
+      "height": "178",
+      "mass": "57",
+      "homeworld": "https://swapi.dev/api/planets/58/"
+    },
+    "zam_wesell": {
+      "height": "168",
+      "mass": "55",
+      "homeworld": "https://swapi.dev/api/planets/54/"
+    },
+    "plo_koon": {
+      "height": "188",
+      "mass": "80",
+      "homeworld": "https://swapi.dev/api/planets/49/"
+    },
+    "luminara_unduli": {
+      "height": "170",
+      "mass": "56.2",
+      "homeworld": "https://swapi.dev/api/planets/51/"
+    },
+    "biggs": {
+      "height": "183",
+      "mass": "84",
+      "homeworld": "https://swapi.dev/api/planets/1/"
+    },
+    "beru_whitesun_lars": {
+      "height": "165",
+      "mass": "75",
+      "homeworld": "https://swapi.dev/api/planets/1/"
+    },
+    "porkins": {
+      "height": "180",
+      "mass": "110",
+      "homeworld": "https://swapi.dev/api/planets/26/"
+    },
+    "wat_tambor": {
+      "height": "193",
+      "mass": "48",
+      "homeworld": "https://swapi.dev/api/planets/56/"
+    },
+    "jek_tono_porkins": {
+      "height": "180",
+      "mass": "110",
+      "homeworld": "https://swapi.dev/api/planets/26/"
+    },
+    "sebulba": {
+      "height": "112",
+      "mass": "40",
+      "homeworld": "https://swapi.dev/api/planets/35/"
+    },
+    "nien_nunb": {
+      "height": "160",
+      "mass": "68",
+      "homeworld": "https://swapi.dev/api/planets/33/"
+    },
+    "tion_medon": {
+      "height": "206",
+      "mass": "80",
+      "homeworld": "https://swapi.dev/api/planets/12/"
+    },
+    "grievous": {
+      "height": "216",
+      "mass": "159",
+      "homeworld": "https://swapi.dev/api/planets/59/"
+    },
+    "kit_fisto": {
+      "height": "196",
+      "mass": "87",
+      "homeworld": "https://swapi.dev/api/planets/44/"
+    },
+    "c-3po": {
+      "height": "167",
+      "mass": "75",
+      "homeworld": "https://swapi.dev/api/planets/1/"
+    },
+    "adi_gallia": {
+      "height": "184",
+      "mass": "50",
+      "homeworld": "https://swapi.dev/api/planets/9/"
+    }
+  },
+  "StarWarsPlanet": {
+    "glee_anselm": {
+      "surface_water": "80",
+      "rotation_period": "33",
+      "population": "500000000",
+      "diameter": "15600",
+      "orbital_period": "206"
+    },
+    "dathomir": {
+      "surface_water": "unknown",
+      "rotation_period": "24",
+      "population": "5200",
+      "diameter": "10480",
+      "orbital_period": "491"
+    },
+    "kamino": {
+      "surface_water": "100",
+      "rotation_period": "27",
+      "population": "1000000000",
+      "diameter": "19720",
+      "orbital_period": "463"
+    },
+    "muunilinst": {
+      "surface_water": "25",
+      "rotation_period": "28",
+      "population": "5000000000",
+      "diameter": "13800",
+      "orbital_period": "412"
+    },
+    "coruscant": {
+      "surface_water": "unknown",
+      "rotation_period": "24",
+      "population": "1000000000000",
+      "diameter": "12240",
+      "orbital_period": "368"
+    },
+    "ryloth": {
+      "surface_water": "5",
+      "rotation_period": "30",
+      "population": "1500000000",
+      "diameter": "10600",
+      "orbital_period": "305"
+    },
+    "tatooine": {
+      "surface_water": "1",
+      "rotation_period": "23",
+      "population": "200000",
+      "diameter": "10465",
+      "orbital_period": "304"
+    },
+    "bespin": {
+      "surface_water": "0",
+      "rotation_period": "12",
+      "population": "6000000",
+      "diameter": "118000",
+      "orbital_period": "5110"
+    },
+    "mustafar": {
+      "surface_water": "0",
+      "rotation_period": "36",
+      "population": "20000",
+      "diameter": "4200",
+      "orbital_period": "412"
+    },
+    "haruun_kal": {
+      "surface_water": "unknown",
+      "rotation_period": "25",
+      "population": "705300",
+      "diameter": "10120",
+      "orbital_period": "383"
+    },
+    "naboo": {
+      "surface_water": "12",
+      "rotation_period": "26",
+      "population": "4500000000",
+      "diameter": "12120",
+      "orbital_period": "312"
+    },
+    "ojom": {
+      "surface_water": "100",
+      "rotation_period": "unknown",
+      "population": "500000000",
+      "diameter": "unknown",
+      "orbital_period": "unknown"
+    },
+    "stewjon": {
+      "surface_water": "unknown",
+      "rotation_period": "unknown",
+      "population": "unknown",
+      "diameter": "0",
+      "orbital_period": "unknown"
+    },
+    "chandrila": {
+      "surface_water": "40",
+      "rotation_period": "20",
+      "population": "1200000000",
+      "diameter": "13500",
+      "orbital_period": "368"
+    },
+    "tund": {
+      "surface_water": "unknown",
+      "rotation_period": "48",
+      "population": "0",
+      "diameter": "12190",
+      "orbital_period": "1770"
+    },
+    "kalee": {
+      "surface_water": "unknown",
+      "rotation_period": "23",
+      "population": "4000000000",
+      "diameter": "13850",
+      "orbital_period": "378"
+    },
+    "saleucami": {
+      "surface_water": "unknown",
+      "rotation_period": "26",
+      "population": "1400000000",
+      "diameter": "14920",
+      "orbital_period": "392"
+    },
+    "iridonia": {
+      "surface_water": "unknown",
+      "rotation_period": "29",
+      "population": "unknown",
+      "diameter": "unknown",
+      "orbital_period": "413"
+    },
+    "mon_cala": {
+      "surface_water": "100",
+      "rotation_period": "21",
+      "population": "27000000000",
+      "diameter": "11030",
+      "orbital_period": "398"
+    }
+  }
+}
