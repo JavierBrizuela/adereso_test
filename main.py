@@ -127,11 +127,12 @@ class ChallengeSolver:
 
     def get_expression_from_ai(self, problem_text):
         chat_url = "https://recruiting.adere.so/chat_completion"
+        sw_characters_str = ", ".join(self.star_wars_characters)
+        sw_planets_str = ", ".join(self.star_wars_planets)
         messages = [
                     {
                         "role": "system",
-                        "content": 
-                        """
+                        "content": f"""
                         ### Instrucciones Estrictas:
                         1. **NO omitas ningún término** del enunciado, incluso si crees que un atributo no existe.
                         2. **Sigue el formato** `[TipoEntidad:nombre_entidad.atributo]` para todos los elementos.
@@ -150,14 +151,26 @@ class ChallengeSolver:
                         - Operadores: `+`, `-`, `*`, `/`.
                         - NO USES MÚLTIPLES BLOQUES DE CÓDIGO MATH, solo UNO FINAL con la expresión completa.
 
-                        **IMPORTANTE PARA DIVISIONES**:
-                        - Para expresiones del tipo "cuántas veces X cabe en Y", la fórmula SIEMPRE debe ser `Y / X`.
-                        - El dividendo (numerador) debe ser lo que contiene, y el divisor (denominador) debe ser lo que cabe.
+                        ### LEE CON ESPECIAL ATENCIÓN ESTAS REGLAS PARA DIVISIONES:
+                        - Para problemas del tipo "cuántas veces A cabe en B", la fórmula SIEMPRE debe ser `B / A`.
+                        Ejemplo: "Calcular cuántas veces la población de Naboo cabe en la población de Coruscant"
+                        La fórmula CORRECTA es: `StarWarsPlanet:coruscant.population / StarWarsPlanet:naboo.population`
+                        
+                        - Para problemas que preguntan "¿cuántas veces X cabe en Y?", SIEMPRE coloca Y en el numerador y X en el denominador.
+                        Ejemplo: "¿Cuántas veces el peso de Pikachu cabe en el peso de Charizard?"
+                        La fórmula CORRECTA es: `Pokemon:charizard.weight / Pokemon:pikachu.weight`
+                        
+                        - NUNCA INVIERTAS LOS TÉRMINOS EN UNA DIVISIÓN relacionada con "caber en" o "cuántas veces".
+                        El dividendo (arriba) es SIEMPRE el contenedor más grande.
+                        El divisor (abajo) es SIEMPRE lo que debe caber dentro.
 
                         **IMPORTANTE PARA RESTAS**:
                         - Si el problema dice "X resta su valor del valor de Y", la fórmula SIEMPRE debe ser `Y - X`.
                         - Si el problema dice "restar X de Y", la fórmula SIEMPRE debe ser `Y - X`.
-
+                        
+                        **IMPORTANTE PARA SUMAS**:
+                        - Si el problema dice x COMBINA con y, la fórmula SIEMPRE debe ser `Y + X`.
+                        
                         **Ejemplos de respuestas correctas**:
                         - Para un problema que requiera sumar dos divisiones:
                         NO HAGAS:
@@ -209,37 +222,27 @@ class ChallengeSolver:
             original_name = name
             print(f"type: {type_part} - name: {name} - attrs: {attrs}")
             # Primera corrección de nombre
-            name = self.correct_entity_name(name, type_part)
+            name = self.correct_entity_name(original_name, type_part)
+            print(f"nombre correjido: {name}") 
             # Validación cruzada de tipo
             validated_type = self.validate_entity_type(name, type_part)
-            
+            print(f"tipo validado: {validated_type}")
             # Si el tipo cambió, volver a corregir el nombre con el tipo validado
             if validated_type != type_part:
                 name = self.correct_entity_name(original_name, validated_type)
+                print(f"type correjido: {type_part} - name correjido: {name} - attrs correjido: {attrs}")
             return {
-                'type': type_part,
+                'type': validated_type,
                 'name': name,
                 'attribute_path': attrs if attrs else ''
             }
+            
         except:
             return None
         
 
     def fetch_data(self, entity_type, entity_name):
-        # Imprimir el estado del caché para este tipo de entidad antes de hacer nada
-        print(f"Estado del caché para {entity_type}: {list(self.cache[entity_type].keys())}")
-        
-        # Corregir nombre
-        original_name = entity_name
-        corrected_name = self.correct_entity_name(
-                                                name=entity_name.lower().replace(" ", "_"),
-                                                entity_type=entity_type
-                                                )
-        entity_name = corrected_name
-        
-        # Mostrar la transformación del nombre para depuración
-        print(f"Nombre original: {original_name} -> Nombre corregido: {entity_name}")
-    
+       
         # Verificar caché primero con información detallada
         print(f"Buscando en caché: {entity_type}:{entity_name}")
         if entity_name in self.cache[entity_type]:
@@ -247,11 +250,10 @@ class ChallengeSolver:
             return self.cache[entity_type][entity_name]
         else:
             print(f"❌ Cache miss: {entity_type}:{entity_name}")
-            print(f"Claves disponibles en caché: {list(self.cache[entity_type].keys())}")
         
         if entity_type == 'StarWarsCharacter':
             url = f"https://swapi.dev/api/people/?search={entity_name.replace('_', ' ')}"
-            print(f'pokemon url: {url}' )
+            print(f'StarWarsCharacter url: {url}' )
             response = requests.get(url)
             data = response.json()
             response = data.get('results', [{}])[0]
@@ -260,9 +262,10 @@ class ChallengeSolver:
                 "mass": response["mass"],
                 "homeworld": response["homeworld"]
             }
+        
         elif entity_type == 'StarWarsPlanet':
             url = f"https://swapi.dev/api/planets/?search={entity_name.replace('_', ' ')}"
-            print(f'pokemon url: {url}' )
+            print(f'StarWarsPlanet url: {url}' )
             response = requests.get(url)
             data = response.json()
             response = data.get('results', [{}])[0]
@@ -273,6 +276,7 @@ class ChallengeSolver:
                 "diameter": response["diameter"],
                 "orbital_period": response["orbital_period"]
             }
+
         elif entity_type == 'Pokemon':
             url = f"https://pokeapi.co/api/v2/pokemon/{entity_name.replace('_', '-').lower()}"
             print(f'pokemon url: {url}' )
@@ -282,12 +286,11 @@ class ChallengeSolver:
                 "height": response.json()["height"],
                 "weight": response.json()["weight"]
             }
+            
         else:
             return None
         
-        if response.status_code != 200:
-            return None
-        
+        print(f"resultado de la api: {result}")
         self.cache[entity_type][entity_name] = result
         return result
 
@@ -324,13 +327,14 @@ class ChallengeSolver:
             print(f"Expression entera: {expression}")
             expression = self.extract_expression(expression)
             print(f"Expression extraida: {expression}")
-            terms = re.findall(r'\b\w+:\w+(?:\.\w+)*\b', expression)
+            terms = re.findall(r'\b\w+:[\w\-]+(?:\.\w+)*\b', expression)
             term_values = {}
             for term in terms:
                 term_info = self.parse_term(term)
                 if not term_info:
                     continue
                 data = self.fetch_data(term_info['type'], term_info['name'])
+                print(f"respuesta de fetch {data}")
                 value = self.resolve_attribute(data, term_info['attribute_path'])
                 term_values[term] = value
                 print(f"value: {value} - term: {term}")
@@ -390,5 +394,5 @@ token = '4303dd47-5a4d-46f5-81c8-900f26a40c5a'
 url_test = 'https://recruiting.adere.so/challenge/test'
 url_start = 'https://recruiting.adere.so/challenge/start'
 solver = ChallengeSolver(token)
-#solver.run(url_start)
-solver.run_test(url_test)
+solver.run(url_start)
+#solver.run_test(url_test)
