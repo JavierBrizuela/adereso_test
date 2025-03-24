@@ -4,7 +4,9 @@ import os
 import json
 import time
 from difflib import get_close_matches
-from datetime import datetime, timedelta
+from datetime import datetime
+from prompt import PROMPT
+from cache_handler import fetch_pokemon_names, fetch_sw_characters, fetch_sw_planets, load_cache, save_cache
 
 class ChallengeSolver:
     def __init__(self, token):
@@ -14,84 +16,12 @@ class ChallengeSolver:
             "Content-Type": "application/json"
         }
         self.cache_file = "api_cache.json"
-        self.cache = self.load_cache()
-        self.pokemon_names = self.fetch_pokemon_names()
-        self.star_wars_characters = self.fetch_sw_characters()
-        self.star_wars_planets = self.fetch_sw_planets()
+        self.cache = load_cache(self.cache_file)
+        self.pokemon_names = fetch_pokemon_names()
+        self.star_wars_characters = fetch_sw_characters()
+        self.star_wars_planets = fetch_sw_planets()
         self.start_time = None
-        self.time_limit = 180  # 3 minutos en segundos            
-
-    def fetch_pokemon_names(self):
-        if not os.path.exists("pokemon.json"):
-            response = requests.get("https://pokeapi.co/api/v2/pokemon?limit=1400")
-            result = [p["name"] for p in response.json()["results"]]
-            with open("pokemon.json", "w") as f:
-                json.dump(result, f, indent=2)
-            return result
-        else:
-            with open("pokemon.json", "r") as f:
-                return json.load(f) 
-
-    def fetch_sw_characters(self):
-        if not os.path.exists("starwar_characters.json"):
-            base_url = "https://swapi.dev/api/people/"
-            characters = []
-        
-            while base_url:
-                response = requests.get(base_url)
-                data = response.json()
-                characters.extend([self.format_character_name(p["name"]) for p in data["results"]])
-                base_url = data["next"]  # URL de la siguiente página (ej: "https://swapi.dev/api/people/?page=2")
-            
-            with open("starwar_characters.json", "w") as f:
-                json.dump(characters, f, indent=2)
-            return characters
-            
-        else:
-            with open("starwar_characters.json", "r") as f:
-                return json.load(f) 
-        
-    def fetch_sw_planets(self):
-        if not os.path.exists("starwar_planets.json"):
-            base_url = "https://swapi.dev/api/planets/"
-            planets = []
-        
-            while base_url:
-                response = requests.get(base_url)
-                data = response.json()
-                planets.extend([self.format_character_name(p["name"]) for p in data["results"]])
-                base_url = data["next"]  # URL de la siguiente página (ej: "https://swapi.dev/api/people/?page=2")
-            
-            with open("starwar_planets.json", "w") as f:
-                json.dump(planets, f, indent=2)
-            return planets
-            
-        else:
-            with open("starwar_planets.json", "r") as f:
-                return json.load(f) 
-    
-    def load_cache(self):
-        """Cargar caché desde archivo JSON."""
-        if not os.path.exists(self.cache_file):
-            return {
-                "Pokemon": {},
-                "StarWarsCharacter": {},
-                "StarWarsPlanet": {}
-            }
-        try:
-            with open(self.cache_file, "r") as f:
-                return json.load(f)
-        except:
-            return {"Pokemon": {}, "StarWarsCharacter": {}, "StarWarsPlanet": {}}
-    
-    def save_cache(self):
-        """Guardar caché en archivo (ejecutar periódicamente)."""
-        with open(self.cache_file, "w") as f:
-            json.dump(self.cache, f, indent=2)
-    
-    def format_character_name(self, name):
-        # Ejemplo de formato: convertir a minúsculas y reemplazar espacios con guiones bajos
-        return name.lower().replace(" ", "_")
+        self.time_limit = 180  # 3 minutos en segundos                
         
     def correct_entity_name(self, name, entity_type):
         if entity_type == "Pokemon":
@@ -103,7 +33,7 @@ class ChallengeSolver:
         else:
             return name
 
-        corrected = get_close_matches(name, valid_names, n=1, cutoff=0.7)
+        corrected = get_close_matches(name, valid_names, n=1, cutoff=0.5)
         return corrected[0] if corrected else name
     
     def validate_entity_type(self, entity_name, parsed_entity_type):
@@ -127,74 +57,10 @@ class ChallengeSolver:
 
     def get_expression_from_ai(self, problem_text):
         chat_url = "https://recruiting.adere.so/chat_completion"
-        sw_characters_str = ", ".join(self.star_wars_characters)
-        sw_planets_str = ", ".join(self.star_wars_planets)
         messages = [
                     {
                         "role": "system",
-                        "content": f"""
-                        ### Instrucciones Estrictas:
-                        1. **NO omitas ningún término** del enunciado, incluso si crees que un atributo no existe.
-                        2. **Sigue el formato** `[TipoEntidad:nombre_entidad.atributo]` para todos los elementos.
-                        3. **Usa solo estos atributos válidos**:
-                        - StarWarsPlanet: surface_water, rotation_period, population, diameter, orbital_period
-                        - StarWarsCharacter: height, mass, homeworld
-                        - Pokemon: base_experience, height, weight
-                        4. **PROPORCIONA SOLO UNA EXPRESIÓN MATEMÁTICA FINAL** que resuelva todo el problema de una vez.
-                        5. **ENVUELVE LA EXPRESIÓN FINAL** entre triple backtick + math, UNA SOLA VEZ al final:
-                        ```math
-                        (StarWarsPlanet:tatooine.population * Pokemon:pikachu.height)
-                        ```
-
-                        **Formato Estricto**:
-                        - Usar `[TipoEntidad:nombre.atributo]`.
-                        - Operadores: `+`, `-`, `*`, `/`.
-                        - NO USES MÚLTIPLES BLOQUES DE CÓDIGO MATH, solo UNO FINAL con la expresión completa.
-
-                        ### LEE CON ESPECIAL ATENCIÓN ESTAS REGLAS PARA DIVISIONES:
-                        - Para problemas del tipo "cuántas veces A cabe en B", la fórmula SIEMPRE debe ser `B / A`.
-                        Ejemplo: "Calcular cuántas veces la población de Naboo cabe en la población de Coruscant"
-                        La fórmula CORRECTA es: `StarWarsPlanet:coruscant.population / StarWarsPlanet:naboo.population`
-                        
-                        - Para problemas que preguntan "¿cuántas veces X cabe en Y?", SIEMPRE coloca Y en el numerador y X en el denominador.
-                        Ejemplo: "¿Cuántas veces el peso de Pikachu cabe en el peso de Charizard?"
-                        La fórmula CORRECTA es: `Pokemon:charizard.weight / Pokemon:pikachu.weight`
-                        
-                        - NUNCA INVIERTAS LOS TÉRMINOS EN UNA DIVISIÓN relacionada con "caber en" o "cuántas veces".
-                        El dividendo (arriba) es SIEMPRE el contenedor más grande.
-                        El divisor (abajo) es SIEMPRE lo que debe caber dentro.
-
-                        **IMPORTANTE PARA RESTAS**:
-                        - Si el problema dice "X resta su valor del valor de Y", la fórmula SIEMPRE debe ser `Y - X`.
-                        - Si el problema dice "restar X de Y", la fórmula SIEMPRE debe ser `Y - X`.
-                        
-                        **IMPORTANTE PARA SUMAS**:
-                        - Si el problema dice x COMBINA con y, la fórmula SIEMPRE debe ser `Y + X`.
-                        
-                        **Ejemplos de respuestas correctas**:
-                        - Para un problema que requiera sumar dos divisiones:
-                        NO HAGAS:
-                        ```math
-                        División1
-                        ```
-                        ```math
-                        División2
-                        ```
-                        ```math
-                        División1 + División2
-                        ```
-                        
-                        CORRECTO:
-                        ```math
-                        (División1) + (División2)
-                        ```
-
-                        - Problema: "Calcular cuántas veces el peso de Cradily cabe en el periodo de rotación de Rodia y luego sumar cuántas veces la altura de R2-D2 cabe en la altura del Conde Dooku"
-                        RESPUESTA CORRECTA:
-                        ```math
-                        (StarWarsPlanet:rodia.rotation_period / Pokemon:cradily.weight) + (StarWarsCharacter:dooku.height / StarWarsCharacter:r2d2.height)
-                        ```
-                        """
+                        "content": PROMPT
                     },
                     {"role": "user", "content": problem_text}
                 ]
@@ -243,7 +109,7 @@ class ChallengeSolver:
 
     def fetch_data(self, entity_type, entity_name):
        
-        # Verificar caché primero con información detallada
+        # Verificar caché primero
         print(f"Buscando en caché: {entity_type}:{entity_name}")
         if entity_name in self.cache[entity_type]:
             print(f"✅ Cache hit: {entity_type}:{entity_name}")
@@ -251,9 +117,9 @@ class ChallengeSolver:
         else:
             print(f"❌ Cache miss: {entity_type}:{entity_name}")
         
+        # Hacer consulta a la api correspondiente
         if entity_type == 'StarWarsCharacter':
             url = f"https://swapi.dev/api/people/?search={entity_name.replace('_', ' ')}"
-            print(f'StarWarsCharacter url: {url}' )
             response = requests.get(url)
             data = response.json()
             response = data.get('results', [{}])[0]
@@ -265,7 +131,6 @@ class ChallengeSolver:
         
         elif entity_type == 'StarWarsPlanet':
             url = f"https://swapi.dev/api/planets/?search={entity_name.replace('_', ' ')}"
-            print(f'StarWarsPlanet url: {url}' )
             response = requests.get(url)
             data = response.json()
             response = data.get('results', [{}])[0]
@@ -279,18 +144,17 @@ class ChallengeSolver:
 
         elif entity_type == 'Pokemon':
             url = f"https://pokeapi.co/api/v2/pokemon/{entity_name.replace('_', '-').lower()}"
-            print(f'pokemon url: {url}' )
             response = requests.get(url)
+            response = response.json()
             result = {
-                "base_experience": response.json()["base_experience"],
-                "height": response.json()["height"],
-                "weight": response.json()["weight"]
+                "base_experience": response["base_experience"],
+                "height": response["height"],
+                "weight": response["weight"]
             }
             
         else:
             return None
-        
-        print(f"resultado de la api: {result}")
+        # Guardar en cache las nuevas entidades
         self.cache[entity_type][entity_name] = result
         return result
 
@@ -309,6 +173,7 @@ class ChallengeSolver:
             return 0
     
     def submit_solution(self, problem_id, answer):
+        # Enviar solucion
         solution_url = "https://recruiting.adere.so/challenge/solution"
         payload = {
             "problem_id": problem_id,
@@ -346,16 +211,24 @@ class ChallengeSolver:
             return eval(expression)
         except:
             return 0
-        
+           
     def start_test(self, url):
         response = requests.get(url , headers=self.headers)
         data = response.json()
-        problem_id = data['id']
-        problem_text = data['problem']
-        problem_expression = data['expression']
-        problem_solution = data['solution']
-        return problem_id, problem_text, problem_expression, problem_solution
+        return data['id'], data['problem'], data['expression'], data['solution']
+        
     
+    def run_test(self, url):
+        problem_id, problem_text, problem_expression, problem_solution = self.start_test(url)
+        answer = self.solve_problem(problem_text)
+        answer = round(answer, 10)
+        save_cache(self.cache_file, self.cache)
+        print(f"Problem ID: {problem_id}")
+        print(f"Problem Text: {problem_text}")
+        print(f"Problem Expression: {problem_expression}")
+        print(f"Problem Solution: {problem_solution}")
+        print(f"Answer: {answer}")
+        
     def start(self, url):
         response = requests.get(url, headers=self.headers)
         response.raise_for_status()
@@ -363,16 +236,6 @@ class ChallengeSolver:
         self.start_time = datetime.now()
         return data['id'], data['problem']
     
-    def run_test(self, url):
-        problem_id, problem_text, problem_expression, problem_solution = self.start_test(url)
-        answer = self.solve_problem(problem_text)
-        self.save_cache()
-        print(f"Problem ID: {problem_id}")
-        print(f"Problem Text: {problem_text}")
-        print(f"Problem Expression: {problem_expression}")
-        print(f"Problem Solution: {problem_solution}")
-        print(f"Answer: {answer}")
-        
     def run(self, url):
         problem_id, problem_text = self.start(url)
         total_problem = 0
@@ -381,8 +244,7 @@ class ChallengeSolver:
             try:
                 next_problem_response = self.submit_solution(problem_id, answer)
                 print(next_problem_response)
-                total_problem += 1
-                print(f"Problema {total_problem}")
+                save_cache(self.cache_file, self.cache)
                 next_problem = next_problem_response['next_problem']
                 problem_id = next_problem['id']
                 problem_text = next_problem['problem']
@@ -390,7 +252,7 @@ class ChallengeSolver:
                 print(f"Error: {e}")
                 break
 
-token = '4303dd47-5a4d-46f5-81c8-900f26a40c5a'
+token = os.getenv('TOKEN')
 url_test = 'https://recruiting.adere.so/challenge/test'
 url_start = 'https://recruiting.adere.so/challenge/start'
 solver = ChallengeSolver(token)

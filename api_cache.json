@@ -659,6 +659,291 @@
       "base_experience": 255,
       "height": 12,
       "weight": 214
+    },
+    "toxicroak": {
+      "base_experience": 172,
+      "height": 13,
+      "weight": 444
+    },
+    "luxio": {
+      "base_experience": 127,
+      "height": 9,
+      "weight": 305
+    },
+    "beedrill": {
+      "base_experience": 178,
+      "height": 10,
+      "weight": 295
+    },
+    "dialga": {
+      "base_experience": 340,
+      "height": 54,
+      "weight": 6830
+    },
+    "yveltal": {
+      "base_experience": 340,
+      "height": 58,
+      "weight": 2030
+    },
+    "probopass": {
+      "base_experience": 184,
+      "height": 14,
+      "weight": 3400
+    },
+    "huntail": {
+      "base_experience": 170,
+      "height": 17,
+      "weight": 270
+    },
+    "gyarados": {
+      "base_experience": 189,
+      "height": 65,
+      "weight": 2350
+    },
+    "lopunny": {
+      "base_experience": 168,
+      "height": 12,
+      "weight": 333
+    },
+    "silcoon": {
+      "base_experience": 72,
+      "height": 6,
+      "weight": 100
+    },
+    "vileplume": {
+      "base_experience": 245,
+      "height": 12,
+      "weight": 186
+    },
+    "electrode": {
+      "base_experience": 172,
+      "height": 12,
+      "weight": 666
+    },
+    "volcarona": {
+      "base_experience": 275,
+      "height": 16,
+      "weight": 460
+    },
+    "machop": {
+      "base_experience": 61,
+      "height": 8,
+      "weight": 195
+    },
+    "crabominable": {
+      "base_experience": 167,
+      "height": 17,
+      "weight": 1800
+    },
+    "diglett": {
+      "base_experience": 53,
+      "height": 2,
+      "weight": 8
+    },
+    "komala": {
+      "base_experience": 168,
+      "height": 4,
+      "weight": 199
+    },
+    "bronzong": {
+      "base_experience": 175,
+      "height": 13,
+      "weight": 1870
+    },
+    "venomoth": {
+      "base_experience": 158,
+      "height": 15,
+      "weight": 125
+    },
+    "gardevoir": {
+      "base_experience": 259,
+      "height": 16,
+      "weight": 484
+    },
+    "combusken": {
+      "base_experience": 142,
+      "height": 9,
+      "weight": 195
+    },
+    "blaziken": {
+      "base_experience": 265,
+      "height": 19,
+      "weight": 520
+    },
+    "scyther": {
+      "base_experience": 100,
+      "height": 15,
+      "weight": 560
+    },
+    "eelektross": {
+      "base_experience": 232,
+      "height": 21,
+      "weight": 805
+    },
+    "metang": {
+      "base_experience": 147,
+      "height": 12,
+      "weight": 2025
+    },
+    "igglybuff": {
+      "base_experience": 42,
+      "height": 3,
+      "weight": 10
+    },
+    "shuppet": {
+      "base_experience": 59,
+      "height": 6,
+      "weight": 23
+    },
+    "rampardos": {
+      "base_experience": 173,
+      "height": 16,
+      "weight": 1025
+    },
+    "solosis": {
+      "base_experience": 58,
+      "height": 3,
+      "weight": 10
+    },
+    "murkrow": {
+      "base_experience": 81,
+      "height": 5,
+      "weight": 21
+    },
+    "trevenant": {
+      "base_experience": 166,
+      "height": 15,
+      "weight": 710
+    },
+    "minun": {
+      "base_experience": 142,
+      "height": 4,
+      "weight": 42
+    },
+    "manectric": {
+      "base_experience": 166,
+      "height": 15,
+      "weight": 402
+    },
+    "gallade": {
+      "base_experience": 259,
+      "height": 16,
+      "weight": 520
+    },
+    "lileep": {
+      "base_experience": 71,
+      "height": 10,
+      "weight": 238
+    },
+    "whiscash": {
+      "base_experience": 164,
+      "height": 9,
+      "weight": 236
+    },
+    "togedemaru": {
+      "base_experience": 152,
+      "height": 3,
+      "weight": 33
+    },
+    "throh": {
+      "base_experience": 163,
+      "height": 13,
+      "weight": 555
+    },
+    "stunky": {
+      "base_experience": 66,
+      "height": 4,
+      "weight": 192
+    },
+    "cyndaquil": {
+      "base_experience": 62,
+      "height": 5,
+      "weight": 79
+    },
+    "paras": {
+      "base_experience": 57,
+      "height": 3,
+      "weight": 54
+    },
+    "hariyama": {
+      "base_experience": 166,
+      "height": 23,
+      "weight": 2538
+    },
+    "seviper": {
+      "base_experience": 160,
+      "height": 27,
+      "weight": 525
+    },
+    "skrelp": {
+      "base_experience": 64,
+      "height": 5,
+      "weight": 73
+    },
+    "drapion": {
+      "base_experience": 175,
+      "height": 13,
+      "weight": 615
+    },
+    "meltan": {
+      "base_experience": 150,
+      "height": 2,
+      "weight": 80
+    },
+    "bruxish": {
+      "base_experience": 166,
+      "height": 9,
+      "weight": 190
+    },
+    "talonflame": {
+      "base_experience": 175,
+      "height": 12,
+      "weight": 245
+    },
+    "wobbuffet": {
+      "base_experience": 142,
+      "height": 13,
+      "weight": 285
+    },
+    "araquanid": {
+      "base_experience": 159,
+      "height": 18,
+      "weight": 820
+    },
+    "chimchar": {
+      "base_experience": 62,
+      "height": 5,
+      "weight": 62
+    },
+    "phanpy": {
+      "base_experience": 66,
+      "height": 5,
+      "weight": 335
+    },
+    "victini": {
+      "base_experience": 300,
+      "height": 4,
+      "weight": 40
+    },
+    "ledian": {
+      "base_experience": 137,
+      "height": 14,
+      "weight": 356
+    },
+    "oshawott": {
+      "base_experience": 62,
+      "height": 5,
+      "weight": 59
+    },
+    "relicanth": {
+      "base_experience": 170,
+      "height": 10,
+      "weight": 234
+    },
+    "dodrio": {
+      "base_experience": 165,
+      "height": 18,
+      "weight": 852
     }
   },
   "StarWarsCharacter": {
@@ -951,6 +1236,31 @@
       "height": "170",
       "mass": "77",
       "homeworld": "https://swapi.dev/api/planets/22/"
+    },
+    "darth_maul": {
+      "height": "175",
+      "mass": "80",
+      "homeworld": "https://swapi.dev/api/planets/36/"
+    },
+    "owen_lars": {
+      "height": "178",
+      "mass": "120",
+      "homeworld": "https://swapi.dev/api/planets/1/"
+    },
+    "anakin_skywalker": {
+      "height": "188",
+      "mass": "84",
+      "homeworld": "https://swapi.dev/api/planets/1/"
+    },
+    "jar_jar_binks": {
+      "height": "196",
+      "mass": "66",
+      "homeworld": "https://swapi.dev/api/planets/8/"
+    },
+    "poggle_the_lesser": {
+      "height": "183",
+      "mass": "80",
+      "homeworld": "https://swapi.dev/api/planets/11/"
     }
   },
   "StarWarsPlanet": {
@@ -1254,6 +1564,48 @@
       "population": "30000000",
       "diameter": "4900",
       "orbital_period": "402"
+    },
+    "eriadu": {
+      "surface_water": "unknown",
+      "rotation_period": "24",
+      "population": "22000000000",
+      "diameter": "13490",
+      "orbital_period": "360"
+    },
+    "polis_massa": {
+      "surface_water": "0",
+      "rotation_period": "24",
+      "population": "1000000",
+      "diameter": "0",
+      "orbital_period": "590"
+    },
+    "skako": {
+      "surface_water": "unknown",
+      "rotation_period": "27",
+      "population": "500000000000",
+      "diameter": "unknown",
+      "orbital_period": "384"
+    },
+    "iktotch": {
+      "surface_water": "unknown",
+      "rotation_period": "22",
+      "population": "unknown",
+      "diameter": "unknown",
+      "orbital_period": "481"
+    },
+    "trandosha": {
+      "surface_water": "unknown",
+      "rotation_period": "25",
+      "population": "42000000",
+      "diameter": "0",
+      "orbital_period": "371"
+    },
+    "hoth": {
+      "surface_water": "100",
+      "rotation_period": "23",
+      "population": "unknown",
+      "diameter": "7200",
+      "orbital_period": "549"
     }
   }
 }
