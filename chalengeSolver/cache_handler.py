@@ -3,18 +3,18 @@ import json
 import requests
    
 def fetch_pokemon_names():
-    if not os.path.exists("pokemon.json"):
+    if not os.path.exists("./cache/pokemon.json"):
         response = requests.get("https://pokeapi.co/api/v2/pokemon?limit=1400")
         result = [p["name"] for p in response.json()["results"]]
-        with open("pokemon.json", "w") as f:
+        with open("./cache/pokemon.json", "w") as f:
             json.dump(result, f, indent=2)
         return result
     else:
-        with open("pokemon.json", "r") as f:
+        with open("./cache/pokemon.json", "r") as f:
             return json.load(f) 
 
 def fetch_sw_characters():
-    if not os.path.exists("starwar_characters.json"):
+    if not os.path.exists("./cache/starwar_characters.json"):
         base_url = "https://swapi.dev/api/people/"
         characters = []
     
@@ -24,16 +24,16 @@ def fetch_sw_characters():
             characters.extend([format_character_name(p["name"]) for p in data["results"]])
             base_url = data["next"]  # URL de la siguiente página (ej: "https://swapi.dev/api/people/?page=2")
         
-        with open("starwar_characters.json", "w") as f:
+        with open("./cache/starwar_characters.json", "w") as f:
             json.dump(characters, f, indent=2)
         return characters
         
     else:
-        with open("starwar_characters.json", "r") as f:
+        with open("./cache/starwar_characters.json", "r") as f:
             return json.load(f) 
     
 def fetch_sw_planets():
-    if not os.path.exists("starwar_planets.json"):
+    if not os.path.exists("./cache/starwar_planets.json"):
         base_url = "https://swapi.dev/api/planets/"
         planets = []
     
@@ -43,12 +43,12 @@ def fetch_sw_planets():
             planets.extend([format_character_name(p["name"]) for p in data["results"]])
             base_url = data["next"]  # URL de la siguiente página (ej: "https://swapi.dev/api/people/?page=2")
         
-        with open("starwar_planets.json", "w") as f:
+        with open("./cache/starwar_planets.json", "w") as f:
             json.dump(planets, f, indent=2)
         return planets
         
     else:
-        with open("starwar_planets.json", "r") as f:
+        with open("./cache/starwar_planets.json", "r") as f:
             return json.load(f) 
 
 def load_cache(cache_file):
