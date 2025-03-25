@@ -38,5 +38,21 @@ Solución automatizada para resolver problemas matemáticos basados en atributos
 
 1. **Clonar repositorio**:
 ```bash
-git clone https://github.com/tu-usuario/swapi-pokeapi-solver.git
-cd swapi-pokeapi-solver
+git clone https://github.com/JavierBrizuela/adereso_test.git
+cd adereso_test
+
+```
+2. **Configurar variables de entorno (.env) en la raíz del proyecto con las siguientes variables::**:
+```bash
+TOKEN='your token'
+```
+3. **Instalar dependencias:**:
+```bash
+pipenv install
+pipenv shell
+
+```
+3. **Ejecuta el desafio:**:
+```bash
+python main.py
+
